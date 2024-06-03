@@ -1,3 +1,5 @@
+DETR for use with [ACT and the low-cost robot arm](https://github.com/trzy/robot-arm).
+
 This part of the codebase is modified from DETR https://github.com/facebookresearch/detr under APACHE 2.0.
 
     @article{Carion2020EndtoEndOD,
