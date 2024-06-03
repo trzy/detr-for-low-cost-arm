@@ -66,12 +66,33 @@ def get_args_parser():
 
     return parser
 
+def get_default_options() -> argparse.Namespace:
+    options = argparse.Namespace()
+    options.lr = 1e-4
+    options.lr_backbone = 1e-5
+    options.batch_size = 2
+    options.weight_decay = 1e-4
+    options.epochs = 300
+    options.lr_drop = 200
+    options.clip_max_norm = 0.1
+    options.backbone = "resnet18"
+    options.dilation = False
+    options.position_embedding = "sine"
+    options.camera_names = []
+    options.enc_layers = 4
+    options.dec_layers = 6
+    options.dim_feedforward = 2048
+    options.hidden_dim = 256
+    options.dropout = 0.1
+    options.nheads = 8
+    options.num_queries = 400
+    options.pre_norm = False
+    options.masks = False
+    return options
 
 def build_ACT_model_and_optimizer(args_override):
-    parser = argparse.ArgumentParser('DETR training and evaluation script', parents=[get_args_parser()])
-    args = parser.parse_args()
-
-    for k, v in args_override.items():
+    args = get_default_options()
+    for k, v in vars(args_override).items():
         setattr(args, k, v)
 
     model = build_ACT_model(args)
@@ -91,10 +112,8 @@ def build_ACT_model_and_optimizer(args_override):
 
 
 def build_CNNMLP_model_and_optimizer(args_override):
-    parser = argparse.ArgumentParser('DETR training and evaluation script', parents=[get_args_parser()])
-    args = parser.parse_args()
-
-    for k, v in args_override.items():
+    args = get_default_options()
+    for k, v in vars(args_override).items():
         setattr(args, k, v)
 
     model = build_CNNMLP_model(args)

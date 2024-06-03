@@ -57,7 +57,7 @@ class DETRVAE(nn.Module):
             self.backbones = nn.ModuleList(backbones)
             self.input_proj_robot_state = nn.Linear(5, hidden_dim)
         else:
-            assert False, "got here but don't know what input_proj_env_state is"
+            raise NotImplementedError
             # input_dim = 14 + 7 # robot_state + env_state
             self.input_proj_robot_state = nn.Linear(5, hidden_dim)
             self.input_proj_env_state = nn.Linear(7, hidden_dim)
