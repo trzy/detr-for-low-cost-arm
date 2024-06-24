@@ -119,7 +119,8 @@ class DETRVAE(nn.Module):
             all_cam_features = []
             all_cam_pos = []
             for cam_id, cam_name in enumerate(self.camera_names):
-                features, pos = self.backbones[0](image[:, cam_id]) # HARDCODED
+                backbone_idx = cam_id % len(self.backbones) # if multiple backbones were supplied, use them, else only use a single one
+                features, pos = self.backbones[backbone_idx](image[:, cam_id]) # HARDCODED
                 features = features[0] # take the last layer feature
                 pos = pos[0]
                 all_cam_features.append(self.input_proj(features))
@@ -233,9 +234,11 @@ def build(args):
     # From state
     # backbone = None # from state for now, no need for conv nets
     # From image
+    num_backbones = len(args.camera_names) if args.use_multiple_backbones else 1
     backbones = []
-    backbone = build_backbone(args)
-    backbones.append(backbone)
+    for i in range(num_backbones):
+        backbone = build_backbone(args)
+        backbones.append(backbone)
 
     transformer = build_transformer(args)
 

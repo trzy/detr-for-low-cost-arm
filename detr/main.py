@@ -79,6 +79,7 @@ def get_default_options() -> argparse.Namespace:
     options.dilation = False
     options.position_embedding = "sine"
     options.camera_names = []
+    options.use_multiple_backbones = False
     options.enc_layers = 4
     options.dec_layers = 6
     options.dim_feedforward = 2048
